@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  flask-api:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    container_name: movie-recommender-api
+    environment:
+      - FLASK_ENV=development
+      - MODEL_PATH=/app/movie_data.pkl
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+  streamlit-app:
+    build: 
+      context: .
+      dockerfile: Dockerfile.streamlit
+    ports:
+      - "8501:8501"
+    volumes:
+      - .:/app
+    depends_on:
+      flask-api:
+        condition: service_healthy
+    environment:
+      - API_URL=http://flask-api:8000
+    container_name: movie-recommender-frontend
+    restart: unless-stopped                                                                                                
