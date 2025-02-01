@@ -24,7 +24,7 @@ The application consists of two main components:
 - **Backend**: Python, Flask
 - **Frontend**: Streamlit
 - **Machine Learning**: scikit-learn (KNN algorithm)
-- **Data Processing**: Pandas, NumPy
+- **Data Processing**: Pandas, NumPy, Matplotlib
 - **Containerization**: Docker
 - **Styling**: CSS3
 - **Interactivity**: JavaScript
